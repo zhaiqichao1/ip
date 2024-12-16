@@ -5,17 +5,15 @@ import subprocess
 from shell import installApk
 from apkutils import APK
 from bs4 import BeautifulSoup
-from xml.dom.minidom import parseString
 
 
-def getPackageName(apk_path):
+def get_package_name(apk_path):
     apk = APK.from_file(apk_path).parse_resource()
     manifest = apk.get_manifest()
     apk.close()
 
     soup = BeautifulSoup(manifest, 'xml')
     print()
-
 
     ANDROID_HOME = os.getenv('ANDROID_HOME')
     # 获取当前操作系统
@@ -42,15 +40,13 @@ def getPackageName(apk_path):
     #
     package_name = re.search(r"package: name='(.*?)'", lines[0]).group(1)
     try:
-        launchable_activity =re.search(r"launchable-activity: name='(.*?)'", output).group(1)
+        launchable_activity = re.search(r"launchable-activity: name='(.*?)'", output).group(1)
     except AttributeError:
         launchable_activity = soup.findAll("activity-alias")[0]["android:name"]
 
     version_code = re.search(r"versionCode='(.*?)'", lines[0]).group(1)
     version_name = re.search(r"versionName='(.*?)'", lines[0]).group(1)
     # sdk_version = re.search(r"sdkVersion:'(.*?)'", lines[1]).group(1)
-
-
 
     app_name = ""
     for i in range(0, len(lines)):
@@ -74,8 +70,7 @@ def getPackageName(apk_path):
     print("是否支持32位:", is_arch32)
     print("是否支持64位:", is_arch64)
     # print("launchable_activity:", launchable_activity)
-    installApk(apk_path,package_name,launchable_activity)
-
+    installApk(apk_path, package_name, launchable_activity)
 
 # def getActivity(soup):
 #     # dom = parseString(manifest)
@@ -86,4 +81,3 @@ def getPackageName(apk_path):
 #         # print(activity)
 #     mainactivity = None  # or whatever python null is
 #
-

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
-from apkInfo import getPackageName
+from apkInfo import get_package_name
 from shell import installApk
 from xml.dom.minidom import parseString
 
@@ -11,7 +11,7 @@ filename = None
 def UploadAction(event=None):
     filename = askopenfilename()
     label1['text'] = filename
-    getPackageName(filename)
+    get_package_name(filename)
 
 
 root = tk.Tk()
