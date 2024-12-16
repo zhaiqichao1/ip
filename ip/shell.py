@@ -7,7 +7,7 @@ def installApk(file,package_name,activity):
     os.system('adb install ' + file)
     os.system('adb shell am start '+package_name+"/"+activity)
 
-    os.system('mitmdump -p 8899 -s F:/PythonProject/test.py')
+    os.system('mitmdump -p 8899 -s F:/PythonProject/ip/test.py')
 
     os.system('adb devices')
 
